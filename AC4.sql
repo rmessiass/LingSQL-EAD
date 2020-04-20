@@ -1,8 +1,52 @@
+CREATE DATABASE PROJETO;
+
+USE PROJETO;
+
+CREATE TABLE Modelo
+(
+    idModelo INT IDENTITY,
+    Descricao VARCHAR (30) NOT NULL,
+    CONSTRAINT pkModelo PRIMARY KEY (idModelo)
+);
+
+
+CREATE TABLE Mes
+(
+    IdMes INT IDENTITY,
+    mes TINYINT NOT NULL,
+    CONSTRAINT pkMes PRIMARY KEY (IdMes),
+    CONSTRAINT ckMes CHECK (mes BETWEEN 1 AND 12) 
+);
+
+
+CREATE TABLE Ano
+(
+    idAno INT IDENTITY,
+    ano SMALLINT NOT NULL,
+    CONSTRAINT pkAno PRIMARY KEY (idAno),
+    CONSTRAINT ckAno CHECK (ano BETWEEN 1900 and YEAR(GETDATE()))
+);
+
+
+CREATE TABLE Fabricante
+(
+    idFabricante INT IDENTITY,
+    Nome VARCHAR (30) NOT NULL,
+    cidade VARCHAR (30) NOT NULL,
+    endereco VARCHAR (50) NOT NULL,
+    UF CHAR (2) NOT NULL,
+    telefone VARCHAR(12),
+    contato VARCHAR (50),
+    CONSTRAINT pkFabricante PRIMARY KEY (idFabricante),
+    CONSTRAINT cktelefone CHECK (telefone LIKE '([0-9][0-9]) [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]') 
+);
+
+
 CREATE TABLE Veiculo
 (
-    idVeiculo INT NOT NULL IDENTITY,
+    idVeiculo INT IDENTITY,
     descricao VARCHAR (30) NOT NULL,
-    valor FLOAT (10,2) NOT NULL,
+    valor DECIMAL (10,2) NOT NULL,
     idModelo INT NOT NULL,
     idFabricante INT NOT NULL,
     idAnoFabricacao INT NOT NULL,
@@ -13,28 +57,10 @@ CREATE TABLE Veiculo
     CONSTRAINT fkVeiculoAnoFabricacao FOREIGN KEY (idAnoFabricacao) REFERENCES Ano (idAno)
 );
 
-CREATE TABLE Modelo
-(
-    idModelo INT NOT NULL IDENTITY,
-    Descricao VARCHAR (30) NOT NULL,
-    CONSTRAINT pkModelo PRIMARY KEY (idModelo),
-);
-
-CREATE TABLE Fabricante
-(
-    idFabricante INT NOT NULL IDENTITY,
-    Nome VARCHAR (30) NOT NULL,
-    cidade VARCHAR (30) NOT NULL,
-    endereco VARCHAR (50) NOT NULL,
-    UF CHAR (2) NOT NULL,
-    telefone VARCHAR(14),
-    contato VARCHAR (50),
-    CONSTRAINT pkFabricante PRIMARY KEY (idFabricante)
-);
 
 CREATE TABLE VendasAnuais
 (
-    IdVendas INT NOT NULL IDENTITY,
+    IdVendas INT IDENTITY,
     qtd INT NOT NULL,
     IdVeiculo INT NOT NULL,
     IdAnodaVenda INT NOT NULL,
@@ -43,18 +69,4 @@ CREATE TABLE VendasAnuais
     CONSTRAINT fkVendasAnuaisVeiculos FOREIGN KEY (IdVeiculo) REFERENCES Veiculo (IdVeiculo),
     CONSTRAINT fkVendasAnuaisAnodaVenda FOREIGN KEY (IdAnodaVenda) REFERENCES Ano (idAno),
     CONSTRAINT fkVendasAnuaisMesdaVenda FOREIGN KEY (idMesdaVenda) REFERENCES Mes (IdMes)
-);
-
-CREATE TABLE Mes
-(
-    IdMes INT NOT NULL IDENTITY,
-    mes TINYINT NOT NULL,
-    CONSTRAINT pkMes PRIMARY KEY (IdMes)
-);
-
-CREATE TABLE Ano
-(
-    idAno INT NOT NULL IDENTITY,
-    ano INT NOT NULL,
-    CONSTRAINT pkAno PRIMARY KEY (idAno)
 );
