@@ -35,10 +35,11 @@ CREATE TABLE Fabricante
     cidade VARCHAR (30) NOT NULL,
     endereco VARCHAR (50) NOT NULL,
     UF CHAR (2) NOT NULL,
-    telefone VARCHAR(12),
+    telefone VARCHAR(14),
     contato VARCHAR (50),
     CONSTRAINT pkFabricante PRIMARY KEY (idFabricante),
-    CONSTRAINT cktelefone CHECK (telefone LIKE '([0-9][0-9]) [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]') 
+    CONSTRAINT cktelefone CHECK (telefone LIKE '([0-9][0-9]) [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
+                                OR telefone LIKE '([0-9][0-9]) [0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]') 
 );
 
 
